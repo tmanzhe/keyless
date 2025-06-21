@@ -18,10 +18,16 @@ export default clerkMiddleware(async (auth, req) => {
   }
 
   // If the user is signed in and has not completed onboarding, redirect them to the onboarding page
-  if (userId && !sessionClaims?.publicMetadata?.onboardingComplete) {
-    if (!isOnboardingRoute(req)) {
-      const onboardingUrl = new URL("/onboarding", req.url);
-      return NextResponse.redirect(onboardingUrl);
+  if (userId) {
+    const onboardingComplete = sessionClaims?.publicMetadata?.onboardingComplete;
+    console.log("Middleware check - User:", userId, "Onboarding complete:", onboardingComplete, "URL:", req.url);
+    
+    if (!onboardingComplete) {
+      if (!isOnboardingRoute(req)) {
+        console.log("Redirecting to onboarding...");
+        const onboardingUrl = new URL("/onboarding", req.url);
+        return NextResponse.redirect(onboardingUrl);
+      }
     }
   }
 });

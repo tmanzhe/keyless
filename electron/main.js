@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain, systemPreferences } = require('electron');
 const { createServer } = require('http');
 const next = require('next');
 const { parse } = require('url');
@@ -18,6 +18,7 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: true,
       enableRemoteModule: false,
+      preload: __dirname + '/preload.js',
     },
     titleBarStyle: 'hiddenInset',
     show: false,
@@ -39,6 +40,60 @@ function createWindow() {
     mainWindow = null;
   });
 }
+
+// Handle accessibility permission requests
+ipcMain.handle('request-accessibility-permissions', async () => {
+  try {
+    // Check if we're on macOS
+    if (process.platform === 'darwin') {
+      // Check current accessibility permission status
+      const hasAccess = systemPreferences.isTrustedAccessibilityClient(false);
+      
+      if (!hasAccess) {
+        // This will prompt the user and potentially open System Preferences
+        const granted = systemPreferences.isTrustedAccessibilityClient(true);
+        
+        if (!granted) {
+          // If still not granted, we can try to open System Preferences
+          const { shell } = require('electron');
+          try {
+            // Open System Preferences to the Accessibility section
+            await shell.openExternal('x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility');
+          } catch (error) {
+            console.log('Could not open System Preferences automatically');
+          }
+        }
+        
+        return granted;
+      }
+      
+      return true;
+    }
+    
+    // For non-macOS platforms, return true (no accessibility permissions needed)
+    return true;
+  } catch (error) {
+    console.error('Error requesting accessibility permissions:', error);
+    return false;
+  }
+});
+
+// Handle microphone permission check (this is mainly handled by the browser)
+ipcMain.handle('check-microphone-permissions', async () => {
+  try {
+    // On macOS, we can check microphone permissions
+    if (process.platform === 'darwin') {
+      const micStatus = systemPreferences.getMediaAccessStatus('microphone');
+      return micStatus === 'granted';
+    }
+    
+    // For other platforms, return true (browser will handle the permission)
+    return true;
+  } catch (error) {
+    console.error('Error checking microphone permissions:', error);
+    return false;
+  }
+});
 
 app.whenReady().then(async () => {
   if (dev) {
