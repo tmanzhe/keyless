@@ -18,7 +18,7 @@ export async function completeOnboarding() {
       },
     });
     revalidatePath("/");
-    redirect("/");
+    redirect("/dashboard");
   } catch (error) {
     console.error("Error completing onboarding:", error);
     throw new Error("Could not complete onboarding.");
