@@ -8,8 +8,8 @@ const isPublicRoute = createRouteMatcher([
 
 const isOnboardingRoute = createRouteMatcher(["/onboarding(.*)"]);
 
-export default clerkMiddleware((auth, req) => {
-  const { userId, sessionClaims } = auth();
+export default clerkMiddleware(async (auth, req) => {
+  const { userId, sessionClaims } = await auth();
 
   // If user is not signed in and trying to access a protected route, redirect to sign-in
   if (!userId && !isPublicRoute(req)) {
@@ -18,7 +18,7 @@ export default clerkMiddleware((auth, req) => {
   }
 
   // If the user is signed in and has not completed onboarding, redirect them to the onboarding page
-  if (userId && !sessionClaims?.metadata?.onboardingComplete) {
+  if (userId && !sessionClaims?.publicMetadata?.onboardingComplete) {
     if (!isOnboardingRoute(req)) {
       const onboardingUrl = new URL("/onboarding", req.url);
       return NextResponse.redirect(onboardingUrl);

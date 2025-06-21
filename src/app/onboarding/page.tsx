@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+import { useAuth } from "@clerk/nextjs"
+import { redirect } from "next/navigation"
 import {
   Card,
   CardContent,
@@ -16,9 +18,15 @@ import { Switch } from "@/components/ui/switch"
 import { completeOnboarding } from "@/app/actions/user"
 
 export default function OnboardingPage() {
+  const { isLoaded, userId } = useAuth()
   const [step, setStep] = useState(1)
   const [useCase, setUseCase] = useState("clean-speech")
   const [storeMemory, setStoreMemory] = useState(false)
+
+  // Redirect to sign-in if not authenticated
+  if (isLoaded && !userId) {
+    redirect("/sign-in")
+  }
 
   const handleFinish = async () => {
     // Here you would typically save the user's choices (useCase, storeMemory)
@@ -29,6 +37,15 @@ export default function OnboardingPage() {
       console.error("Failed to complete onboarding:", error)
       // Handle error appropriately in the UI
     }
+  }
+
+  // Show loading state while auth is loading
+  if (!isLoaded) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">Loading...</div>
+      </div>
+    )
   }
 
   return (

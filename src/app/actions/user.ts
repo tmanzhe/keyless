@@ -5,14 +5,15 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function completeOnboarding() {
-  const { userId } = auth();
+  const { userId } = await auth();
 
   if (!userId) {
     throw new Error("You must be signed in to complete onboarding.");
   }
 
   try {
-    await clerkClient.users.updateUserMetadata(userId, {
+    const client = await clerkClient();
+    await client.users.updateUserMetadata(userId, {
       publicMetadata: {
         onboardingComplete: true,
       },
