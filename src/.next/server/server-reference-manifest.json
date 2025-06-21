@@ -1,0 +1,50 @@
+{
+  "node": {
+    "7f06d30f8d50dde10680492109e7ba5c6fef742355": {
+      "workers": {
+        "app/page": {
+          "moduleId": "(rsc)/../node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Ftmanzhe%2FDownloads%2Fprojects%2Fkeyless%2Ftemplate4hackathon%2Fnode_modules%2F%40clerk%2Fnextjs%2Fdist%2Fesm%2Fapp-router%2Fkeyless-actions.js%22%2C%5B%7B%22id%22%3A%227f06d30f8d50dde10680492109e7ba5c6fef742355%22%2C%22exportedName%22%3A%22deleteKeylessAction%22%7D%2C%7B%22id%22%3A%227f47a57f84e5bd51daaf82aac346cb319e09100a31%22%2C%22exportedName%22%3A%22createOrReadKeylessAction%22%7D%2C%7B%22id%22%3A%227fe8af891cc46e6328a3e0161ffd56a51115e3df5b%22%2C%22exportedName%22%3A%22syncKeylessConfigAction%22%7D%5D%5D%5D&__client_imported__=!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/page": "rsc"
+      }
+    },
+    "7f47a57f84e5bd51daaf82aac346cb319e09100a31": {
+      "workers": {
+        "app/page": {
+          "moduleId": "(rsc)/../node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Ftmanzhe%2FDownloads%2Fprojects%2Fkeyless%2Ftemplate4hackathon%2Fnode_modules%2F%40clerk%2Fnextjs%2Fdist%2Fesm%2Fapp-router%2Fkeyless-actions.js%22%2C%5B%7B%22id%22%3A%227f06d30f8d50dde10680492109e7ba5c6fef742355%22%2C%22exportedName%22%3A%22deleteKeylessAction%22%7D%2C%7B%22id%22%3A%227f47a57f84e5bd51daaf82aac346cb319e09100a31%22%2C%22exportedName%22%3A%22createOrReadKeylessAction%22%7D%2C%7B%22id%22%3A%227fe8af891cc46e6328a3e0161ffd56a51115e3df5b%22%2C%22exportedName%22%3A%22syncKeylessConfigAction%22%7D%5D%5D%5D&__client_imported__=!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/page": "rsc"
+      }
+    },
+    "7fe8af891cc46e6328a3e0161ffd56a51115e3df5b": {
+      "workers": {
+        "app/page": {
+          "moduleId": "(rsc)/../node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Ftmanzhe%2FDownloads%2Fprojects%2Fkeyless%2Ftemplate4hackathon%2Fnode_modules%2F%40clerk%2Fnextjs%2Fdist%2Fesm%2Fapp-router%2Fkeyless-actions.js%22%2C%5B%7B%22id%22%3A%227f06d30f8d50dde10680492109e7ba5c6fef742355%22%2C%22exportedName%22%3A%22deleteKeylessAction%22%7D%2C%7B%22id%22%3A%227f47a57f84e5bd51daaf82aac346cb319e09100a31%22%2C%22exportedName%22%3A%22createOrReadKeylessAction%22%7D%2C%7B%22id%22%3A%227fe8af891cc46e6328a3e0161ffd56a51115e3df5b%22%2C%22exportedName%22%3A%22syncKeylessConfigAction%22%7D%5D%5D%5D&__client_imported__=!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/page": "rsc"
+      }
+    },
+    "7fb3985630415620c5df8fd1ecc1b620e62fd5fbb6": {
+      "workers": {
+        "app/page": {
+          "moduleId": "(action-browser)/../node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Ftmanzhe%2FDownloads%2Fprojects%2Fkeyless%2Ftemplate4hackathon%2Fnode_modules%2F%40clerk%2Fnextjs%2Fdist%2Fesm%2Fapp-router%2Fserver-actions.js%22%2C%5B%7B%22id%22%3A%227fb3985630415620c5df8fd1ecc1b620e62fd5fbb6%22%2C%22exportedName%22%3A%22invalidateCacheAction%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/page": "action-browser"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "zeZuX9NbjqPYDHV0l7Wk/V8GjKVLiC0+zx9NEJrQPT4="
+}

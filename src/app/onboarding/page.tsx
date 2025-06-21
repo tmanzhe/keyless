@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { useAuth } from "@clerk/nextjs"
-import { redirect } from "next/navigation"
+import { useAuth, useUser } from "@clerk/nextjs"
+import { useRouter } from "next/navigation"
 import {
   Card,
   CardContent,
@@ -15,27 +15,41 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
-import { completeOnboarding } from "@/app/actions/user"
 
 export default function OnboardingPage() {
   const { isLoaded, userId } = useAuth()
+  const { user } = useUser()
+  const router = useRouter()
   const [step, setStep] = useState(1)
   const [useCase, setUseCase] = useState("clean-speech")
   const [storeMemory, setStoreMemory] = useState(false)
+  const [isCompleting, setIsCompleting] = useState(false)
 
   // Redirect to sign-in if not authenticated
   if (isLoaded && !userId) {
-    redirect("/sign-in")
+    router.push("/sign-in")
+    return null
   }
 
   const handleFinish = async () => {
-    // Here you would typically save the user's choices (useCase, storeMemory)
-    // For now, we'll just complete the onboarding
+    if (!user) return
+    
+    setIsCompleting(true)
     try {
-      await completeOnboarding()
+      // Update user metadata on client side
+      await user.update({
+        publicMetadata: {
+          onboardingComplete: true,
+          useCase,
+          storeMemory,
+        },
+      })
+      
+      // Navigate to dashboard
+      router.push("/dashboard")
     } catch (error) {
       console.error("Failed to complete onboarding:", error)
-      // Handle error appropriately in the UI
+      setIsCompleting(false)
     }
   }
 
@@ -125,7 +139,9 @@ export default function OnboardingPage() {
             <Button variant="outline" onClick={() => setStep(1)}>
               Back
             </Button>
-            <Button onClick={handleFinish}>Finish</Button>
+            <Button onClick={handleFinish} disabled={isCompleting}>
+              {isCompleting ? "Finishing..." : "Finish"}
+            </Button>
           </CardFooter>
         </Card>
       )}

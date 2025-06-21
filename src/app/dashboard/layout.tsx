@@ -1,3 +1,4 @@
+import Link from "next/link"
 import {
   Sidebar,
   SidebarContent,
@@ -10,28 +11,33 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { Home, BookOpen, FileText, Settings } from "@tabler/icons-react"
+import { 
+  IconHome, 
+  IconBook, 
+  IconFileText, 
+  IconSettings 
+} from "@tabler/icons-react"
 
 const items = [
   {
     title: "Home",
     url: "/dashboard",
-    icon: Home,
+    icon: IconHome,
   },
   {
     title: "Dictionary",
     url: "/dashboard/dictionary",
-    icon: BookOpen,
+    icon: IconBook,
   },
   {
     title: "Transcript",
     url: "/dashboard/transcript",
-    icon: FileText,
+    icon: IconFileText,
   },
   {
     title: "Settings",
     url: "/dashboard/settings",
-    icon: Settings,
+    icon: IconSettings,
   },
 ]
 
@@ -52,10 +58,10 @@ export default function DashboardLayout({
                   {items.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton asChild>
-                        <a href={item.url}>
+                        <Link href={item.url}>
                           <item.icon className="h-4 w-4" />
                           <span>{item.title}</span>
-                        </a>
+                        </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
