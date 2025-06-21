@@ -2,7 +2,7 @@
 
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 export async function completeOnboarding(formData: {
   useCase: string;
@@ -32,13 +32,21 @@ export async function completeOnboarding(formData: {
     });
     
     console.log("Metadata updated successfully:", result.publicMetadata);
+    
+    // Set a temporary cookie to bypass middleware check
+    const cookieStore = await cookies();
+    cookieStore.set('onboarding-bypass', 'true', {
+      maxAge: 10, // 10 seconds
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+    });
+    
     revalidatePath("/");
     revalidatePath("/dashboard");
+    
+    return { success: true };
   } catch (error) {
     console.error("Error completing onboarding:", error);
     throw error;
   }
-  
-  console.log("Redirecting to dashboard...");
-  redirect("/dashboard");
 } 

@@ -1,7 +1,9 @@
 import Link from "next/link"
+import { UserButton } from "@clerk/nextjs"
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -9,7 +11,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
-  SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { 
   IconHome, 
@@ -47,12 +48,12 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={true}>
       <div className="flex h-screen w-full">
-        <Sidebar>
+        <Sidebar collapsible="none">
+          <div className="px-4 pt-8 pb-2 font-bold text-xl">Keyless</div>
           <SidebarContent>
             <SidebarGroup>
-              <SidebarGroupLabel>Navigation</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
                   {items.map((item) => (
@@ -69,12 +70,25 @@ export default function DashboardLayout({
               </SidebarGroupContent>
             </SidebarGroup>
           </SidebarContent>
+          <SidebarFooter>
+            <div className="p-2">
+              <UserButton 
+                afterSignOutUrl="/sign-in"
+                appearance={{
+                  elements: {
+                    avatarBox: "h-8 w-8",
+                  },
+                }}
+              />
+            </div>
+          </SidebarFooter>
         </Sidebar>
         <main className="flex-1 overflow-auto">
-          <div className="p-4">
-            <SidebarTrigger />
+          <div className="pt-8 pl-6 pr-6 pb-6 h-full">
+            <div className="h-full">
+              {children}
+            </div>
           </div>
-          {children}
         </main>
       </div>
     </SidebarProvider>

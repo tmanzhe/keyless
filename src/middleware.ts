@@ -20,9 +20,14 @@ export default clerkMiddleware(async (auth, req) => {
   // If the user is signed in and has not completed onboarding, redirect them to the onboarding page
   if (userId) {
     const onboardingComplete = sessionClaims?.publicMetadata?.onboardingComplete;
-    console.log("Middleware check - User:", userId, "Onboarding complete:", onboardingComplete, "URL:", req.url);
+    const hasOnboardingBypass = req.cookies.get('onboarding-bypass')?.value === 'true';
     
-    if (!onboardingComplete) {
+    console.log("Middleware check - User:", userId, "Onboarding complete:", onboardingComplete, "Bypass:", hasOnboardingBypass, "URL:", req.url);
+    
+    // Check if this is a POST request to onboarding (completing onboarding)
+    const isCompletingOnboarding = req.method === 'POST' && isOnboardingRoute(req);
+    
+    if (!onboardingComplete && !isCompletingOnboarding && !hasOnboardingBypass) {
       if (!isOnboardingRoute(req)) {
         console.log("Redirecting to onboarding...");
         const onboardingUrl = new URL("/onboarding", req.url);

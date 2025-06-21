@@ -89,14 +89,17 @@ export default function OnboardingPage() {
     setIsCompleting(true)
     try {
       // Call server action to update user metadata
-      await completeOnboarding({
+      const result = await completeOnboarding({
         useCase,
         storeMemory,
         microphonePermission,
         accessibilityPermission,
       })
       
-      // Navigation will be handled by the server action redirect
+      if (result.success) {
+        // Simple redirect - the bypass cookie will handle the middleware
+        window.location.href = "/dashboard"
+      }
     } catch (error) {
       console.error("Failed to complete onboarding:", error)
       setIsCompleting(false)

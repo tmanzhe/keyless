@@ -1,6 +1,6 @@
 export default function DictionaryPage() {
   return (
-    <div className="px-8 py-4">
+    <div>
       <h1 className="text-3xl font-bold mb-2">Dictionary</h1>
       <p className="text-muted-foreground mb-8">
         Your personal vocabulary and frequently used terms.

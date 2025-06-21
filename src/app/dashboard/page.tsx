@@ -60,7 +60,7 @@ const items = [
 
 export default function DashboardPage() {
   return (
-    <div className="px-8 py-4">
+    <div>
       <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
       <p className="text-muted-foreground mb-8">
         Welcome back! Start recording or explore your features.
